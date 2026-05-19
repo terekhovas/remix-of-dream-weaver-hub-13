@@ -8,11 +8,15 @@ import { RentRoll } from "@/components/rentroll/RentRoll";
 import { OccupancyChart } from "@/components/occupancy/OccupancyChart";
 import { MarketAnalysis } from "@/components/market/MarketAnalysis";
 import { properties, getDashboardStats } from "@/data/mockData";
-import { LayoutDashboard, Building2, ScrollText, CalendarDays, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Building2, ScrollText, CalendarDays, BarChart3, LogOut } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const stats = useMemo(() => getDashboardStats(properties), []);
   const [showArrears, setShowArrears] = useState(false);
+  const { profile } = useAuth();
 
   return (
     <div className="min-h-screen bg-background">
@@ -27,6 +31,19 @@ const Index = () => {
                 <h1 className="text-lg font-bold text-foreground tracking-tight">PropManager</h1>
                 <p className="text-[11px] text-muted-foreground -mt-0.5">Property Portfolio Management</p>
               </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {profile?.full_name && (
+                <span className="text-sm text-muted-foreground">{profile.full_name}</span>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => supabase.auth.signOut()}
+              >
+                <LogOut className="h-4 w-4 mr-1" />
+                Sign out
+              </Button>
             </div>
           </div>
         </div>
