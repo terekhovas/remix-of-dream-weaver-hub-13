@@ -353,6 +353,14 @@ create policy "leads_company_isolation" on leads
 create policy "pipeline_properties_company_isolation" on pipeline_properties
   for all using (company_id = auth_company_id());
 
+-- COMPANIES: users can read the company they belong to
+create policy "companies_user_access" on companies
+  for select using (exists(
+    select 1 from profiles
+    where profiles.company_id = companies.id
+    and profiles.id = auth.uid()
+  ));
+
 -- =============================================
 -- SEED DATA (1 company, 2 PM accounts for testing)
 -- Run separately after creating users in Supabase Auth dashboard
