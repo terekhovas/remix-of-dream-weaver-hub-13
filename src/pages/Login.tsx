@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react"
+import { useNavigate } from "react-router-dom"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -21,9 +23,10 @@ export default function Login() {
 
     if (signInError) {
       setError(signInError.message)
+      setLoading(false)
+    } else {
+      navigate("/")
     }
-
-    setLoading(false)
   }
 
   return (
