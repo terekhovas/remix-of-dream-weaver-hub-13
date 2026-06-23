@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext"
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
 import Index from "./pages/Index"
 import Login from "./pages/Login"
+import PropertyDetailPage from "./pages/properties/PropertyDetailPage"
 import NotFound from "./pages/NotFound"
 
 const queryClient = new QueryClient()
@@ -26,6 +27,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Index />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/properties/:id"
+                element={
+                  <ProtectedRoute>
+                    <PropertyDetailPage />
                   </ProtectedRoute>
                 }
               />

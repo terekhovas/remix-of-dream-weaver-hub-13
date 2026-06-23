@@ -93,7 +93,7 @@ const Index = () => {
                 <h2 className="text-xl font-bold text-foreground">Properties</h2>
                 <p className="text-sm text-muted-foreground">Manage your property portfolio</p>
               </div>
-              <PropertiesTable properties={properties} />
+              <PropertiesTable />
             </div>
           </TabsContent>
 
