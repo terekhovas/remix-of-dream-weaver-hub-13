@@ -12,7 +12,7 @@ import { useProperty, type PropertyDetail } from "@/hooks/useProperty";
 
 function ordinal(floor: number): string {
   if (floor === 0) return "Ground floor";
-  const suffix = [, "st", "nd", "rd"][floor] ?? "th";
+  const suffix = ["", "st", "nd", "rd"][floor] ?? "th";
   return `${floor}${suffix} floor`;
 }
 
