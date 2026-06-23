@@ -12,8 +12,14 @@ import { useProperty, type PropertyDetail } from "@/hooks/useProperty";
 
 function ordinal(floor: number): string {
   if (floor === 0) return "Ground floor";
-  const suffix = ["", "st", "nd", "rd"][floor] ?? "th";
-  return `${floor}${suffix} floor`;
+  const mod100 = floor % 100;
+  const mod10 = floor % 10;
+  // 11th, 12th, 13th are exceptions
+  if (mod100 >= 11 && mod100 <= 13) return `${floor}th floor`;
+  if (mod10 === 1) return `${floor}st floor`;
+  if (mod10 === 2) return `${floor}nd floor`;
+  if (mod10 === 3) return `${floor}rd floor`;
+  return `${floor}th floor`;
 }
 
 function certStatus(valid_until: string | null): "valid" | "expiring" | "expired" {
@@ -308,7 +314,7 @@ function TenanciesTab({ p }: { p: PropertyDetail }) {
 export default function PropertyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: property, isLoading, isError } = useProperty(id!);
+  const { data: property, isLoading, isError } = useProperty(id);
 
   if (isLoading) {
     return (

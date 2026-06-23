@@ -33,10 +33,10 @@ async function fetchProperty(id: string): Promise<PropertyDetail> {
   return data as PropertyDetail;
 }
 
-export function useProperty(id: string) {
+export function useProperty(id: string | undefined) {
   return useQuery({
     queryKey: ["property", id],
-    queryFn: () => fetchProperty(id),
+    queryFn: () => fetchProperty(id!),
     enabled: !!id,
   });
 }

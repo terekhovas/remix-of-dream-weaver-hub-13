@@ -30,7 +30,7 @@ export function PropertiesTable() {
   const navigate = useNavigate();
 
   const filtered = properties.filter((p) =>
-    `${p.address} ${p.city}`.toLowerCase().includes(search.toLowerCase())
+    `${p.address} ${p.city} ${p.postcode ?? ""}`.toLowerCase().includes(search.toLowerCase())
   );
 
   if (isLoading) {
