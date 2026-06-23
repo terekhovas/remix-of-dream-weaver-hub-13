@@ -7,8 +7,9 @@ import { PropertiesTable } from "@/components/properties/PropertiesTable";
 import { RentRoll } from "@/components/rentroll/RentRoll";
 import { OccupancyChart } from "@/components/occupancy/OccupancyChart";
 import { MarketAnalysis } from "@/components/market/MarketAnalysis";
+import { PayoutTab } from "@/components/payout/PayoutTab";
 import { properties, getDashboardStats } from "@/data/mockData";
-import { LayoutDashboard, Building2, ScrollText, CalendarDays, BarChart3, LogOut } from "lucide-react";
+import { LayoutDashboard, Building2, ScrollText, CalendarDays, BarChart3, Wallet, LogOut } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -36,11 +37,7 @@ const Index = () => {
               {profile?.full_name && (
                 <span className="text-sm text-muted-foreground">{profile.full_name}</span>
               )}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => supabase.auth.signOut()}
-              >
+              <Button variant="ghost" size="sm" onClick={() => supabase.auth.signOut()}>
                 <LogOut className="h-4 w-4 mr-1" />
                 Sign out
               </Button>
@@ -61,6 +58,9 @@ const Index = () => {
             <TabsTrigger value="rentroll" className="gap-2">
               <ScrollText className="h-4 w-4" />Rent Roll
             </TabsTrigger>
+            <TabsTrigger value="payout" className="gap-2">
+              <Wallet className="h-4 w-4" />Payout
+            </TabsTrigger>
             <TabsTrigger value="occupancy" className="gap-2">
               <CalendarDays className="h-4 w-4" />Occupancy
             </TabsTrigger>
@@ -76,7 +76,9 @@ const Index = () => {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-xl font-bold text-foreground">Portfolio Overview</h2>
-                  <p className="text-sm text-muted-foreground">Key performance indicators for your property portfolio</p>
+                  <p className="text-sm text-muted-foreground">
+                    Key performance indicators for your property portfolio
+                  </p>
                 </div>
                 <KPICards stats={stats} onArrearsClick={() => setShowArrears(true)} />
                 <div>
@@ -93,12 +95,16 @@ const Index = () => {
                 <h2 className="text-xl font-bold text-foreground">Properties</h2>
                 <p className="text-sm text-muted-foreground">Manage your property portfolio</p>
               </div>
-              <PropertiesTable />
+              <PropertiesTable properties={properties} />
             </div>
           </TabsContent>
 
           <TabsContent value="rentroll">
             <RentRoll properties={properties} />
+          </TabsContent>
+
+          <TabsContent value="payout">
+            <PayoutTab properties={properties} />
           </TabsContent>
 
           <TabsContent value="occupancy">
